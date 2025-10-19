@@ -38,12 +38,34 @@
         highDifficultyBtn.classList.toggle("active", difficulty === "high");
     }
 
+    // ---- Records (max score)
+    let maxRecordSeconds = loadMaxRecord();
+    function loadMaxRecord() {
+        try {
+            const v = localStorage.getItem('dodge_maxRecord');
+            return v ? parseFloat(v) || 0 : 0;
+        } catch (e) {
+            return 0;
+        }
+    }
+    function saveMaxRecord() {
+        try {
+            localStorage.setItem('dodge_maxRecord', String(maxRecordSeconds));
+        } catch (e) {
+            // ignore
+        }
+    }
+
     // ---- Utils
     const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
     const randInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
     function centerText(text, y) {
         const m = ctx.measureText(text);
         ctx.fillText(text, (canvas.width - m.width) / 2, y);
+    }
+    function rightText(text, y) {
+        const m = ctx.measureText(text);
+        ctx.fillText(text, canvas.width - m.width - 12, y);
     }
 
     // ---- Input
@@ -188,6 +210,13 @@
         setDifficulty("low");
     }
     function setState(s) {
+        // If transitioning to gameover, update max record if needed and persist
+        if (s === "gameover") {
+            if (scoreSeconds > maxRecordSeconds) {
+                maxRecordSeconds = scoreSeconds;
+                saveMaxRecord();
+            }
+        }
         gameState = s;
         restartBtn.hidden = s !== "gameover";
         difficultySelector.hidden = s === "playing";
@@ -224,6 +253,8 @@
         if (gameState === "playing") {
             ctx.fillText(`Difficulty: ${difficulty.toUpperCase()}`, 12, 48);
         }
+        // Draw max record, right-aligned
+        rightText(`Max Record: ${maxRecordSeconds.toFixed(1)}s`, 24);
 
         // entities
         drawPlayer(player);
