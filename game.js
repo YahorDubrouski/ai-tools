@@ -7,6 +7,9 @@
     const canvas = document.getElementById("game");
     const ctx = canvas.getContext("2d");
     const restartBtn = document.getElementById("restartBtn");
+    const lowDifficultyBtn = document.getElementById("lowDifficulty");
+    const highDifficultyBtn = document.getElementById("highDifficulty");
+    const difficultySelector = document.getElementById("difficultySelector");
 
     // ---- Constants
     const COLOR = {
@@ -25,6 +28,15 @@
         safeSpawnMarginX: 28, // px horizontally around player to avoid
         topSafePad: 2        // px below the top
     };
+
+    // ---- Difficulty
+    let difficulty = "low"; // "low" or "high"
+    
+    function setDifficulty(newDifficulty) {
+        difficulty = newDifficulty;
+        lowDifficultyBtn.classList.toggle("active", difficulty === "low");
+        highDifficultyBtn.classList.toggle("active", difficulty === "high");
+    }
 
     // ---- Utils
     const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
@@ -54,6 +66,8 @@
         window.addEventListener("keydown", down, { passive: false });
         window.addEventListener("keyup", up, { passive: false });
         restartBtn.addEventListener("click", tryRestartGame);
+        lowDifficultyBtn.addEventListener("click", () => setDifficulty("low"));
+        highDifficultyBtn.addEventListener("click", () => setDifficulty("high"));
         return {
             get left() { return state.left; },
             get right() { return state.right; }
@@ -92,6 +106,7 @@
 
     function spawnObstacle() {
         const w = OBSTACLE.w, h = OBSTACLE.h;
+        const speed = difficulty === "high" ? OBSTACLE.speed * 3 : OBSTACLE.speed;
 
         // Avoid spawning directly over the player's horizontal band
         const safeLeft = player.x - OBSTACLE.safeSpawnMarginX;
@@ -117,14 +132,15 @@
         }
 
         const y = -h + OBSTACLE.topSafePad;
-        obstacles.push({ x, y, w, h, speed: OBSTACLE.speed });
+        obstacles.push({ x, y, w, h, speed });
     }
     function clearObstacles() { obstacles.length = 0; spawnTimer = 0; }
     function updateObstacles(dt) {
         if (gameState === "playing") {
             spawnTimer += dt;
-            while (spawnTimer >= OBSTACLE.spawnInterval) {
-                spawnTimer -= OBSTACLE.spawnInterval;
+            const spawnInterval = difficulty === "high" ? OBSTACLE.spawnInterval / 3 : OBSTACLE.spawnInterval;
+            while (spawnTimer >= spawnInterval) {
+                spawnTimer -= spawnInterval;
                 spawnObstacle();
             }
         }
@@ -168,10 +184,13 @@
         resetPlayer(player);
         clearObstacles();
         scoreSeconds = 0;
+        // Reset difficulty to low on game restart
+        setDifficulty("low");
     }
     function setState(s) {
         gameState = s;
         restartBtn.hidden = s !== "gameover";
+        difficultySelector.hidden = s === "playing";
     }
 
     // ---- Main loop
@@ -202,13 +221,16 @@
         ctx.fillStyle = COLOR.text;
         ctx.font = FONT;
         ctx.fillText(`Score: ${scoreSeconds.toFixed(1)}s`, 12, 24);
+        if (gameState === "playing") {
+            ctx.fillText(`Difficulty: ${difficulty.toUpperCase()}`, 12, 48);
+        }
 
         // entities
         drawPlayer(player);
         drawObstacles();
 
         // overlays
-        if (gameState === "ready") drawCenteredOverlay("DODGE THE BLOCKS", "Press Enter to Start", "Move with ← → or A/D");
+        if (gameState === "ready") drawCenteredOverlay("DODGE THE BLOCKS", "Press Enter to Start", `Move with ← → or A/D | Difficulty: ${difficulty.toUpperCase()}`);
         if (gameState === "gameover") drawGameOverOverlay();
     }
 

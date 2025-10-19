@@ -24,3 +24,60 @@ body {
     border-radius: 10px;
     image-rendering: pixelated;
 }
+
+.difficulty-selector {
+    margin-top: 16px;
+    text-align: center;
+}
+
+.difficulty-selector h3 {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    color: var(--accent);
+}
+
+.difficulty-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.difficulty-btn {
+    padding: 6px 16px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--accent);
+    font-family: var(--font);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.difficulty-btn:hover {
+    background: #1a1d3a;
+    border-color: #4a4f81;
+}
+
+.difficulty-btn.active {
+    background: #3a3f71;
+    border-color: #5a5f91;
+}
+
+.restart-btn {
+    margin-top: 16px;
+    padding: 8px 20px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--accent);
+    font-family: var(--font);
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.restart-btn:hover {
+    background: #1a1d3a;
+    border-color: #4a4f81;
+}
