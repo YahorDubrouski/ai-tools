@@ -1,0 +1,26 @@
+:root {
+    --bg: #0f1226;
+    --accent: #e3e7ff;
+    --border: #3a3f71;
+    --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+    margin: 0;
+    background: radial-gradient(1200px 800px at 50% 30%, #151943, var(--bg));
+    color: var(--accent);
+    font-family: var(--font);
+}
+.wrap {
+    min-height: 100%;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+}
+#game {
+    background: #0a0d22;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    image-rendering: pixelated;
+}
