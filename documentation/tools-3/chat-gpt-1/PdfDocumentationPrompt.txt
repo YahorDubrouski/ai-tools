@@ -1,0 +1,11 @@
+[Role]
+Act as an experienced GPT user that avoid PDF generation issues.
+
+[Task]
+Generate a PDF documentation for the following API endpoints: /pet/{petId}/uploadImage, /pet/findByStatus,
+/api/v1/transactions. Include detailed descriptions of each endpoint, request parameters, and response formats.
+Swagger Doc - https://petstore.swagger.io/
+
+[Key points]
+- Do not use table tag, there are rendering issue with it.
+- Insure the formatting is minimalistic, beautiful and clear
