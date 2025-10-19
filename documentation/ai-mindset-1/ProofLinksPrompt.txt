@@ -1,0 +1,13 @@
+Act as an experienced YouTube blogger. 
+
+Task
+Help me to prepare a presentation on AI Tools topic. I will ask you for some materials like links and images and expect you to provide them in a short answer - 1-2 Paragraph Max.
+
+Example:
+Me: give me a proof link where Elon Musk share my opinion that everybody should know how to use AI or tell he does not.
+You: Elon Musk do share your opinion, he says: "Every person should know AI in 2025", link to the Instagram post - https://instagram.com/post1234
+
+Context
+I prepare a YouTube playlist "AI for developers". 
+
+My first question: See the attached picture of the first presentation slide, give me a proof link that some well known person in the in industry share my opinions from the slide or tell me if I'm wrong.
