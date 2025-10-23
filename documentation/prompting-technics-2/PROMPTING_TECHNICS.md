@@ -31,7 +31,7 @@ E1 --> V[🧠 Vector Database - Store semantic meaning of 'What is vector databa
 end
 
 subgraph Retrieval_and_Augmentation
-U2[💬 New Query - 'Add visualizations to the answer'] --> E2[🧩 Text Embeddings - Convert text to vectors]
+U2[💬 New Query - 'Add visualizations to the answer with vector db'] --> E2[🧩 Text Embeddings - Convert text to vectors]
 E2 -->|🔎 Semantic Search| V
 V --> C[📚 Top-K Similar Contexts - e.g. previous query 'What is vector database']
 C --> P[🧱 Augmented Prompt - Combine new query with retrieved context]
