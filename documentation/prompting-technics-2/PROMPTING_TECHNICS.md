@@ -22,6 +22,23 @@ quick reference while developing or running GPT-based projects.
 
 ![EmbeddingsDiagram.png](EmbeddingsDiagram.png)
 
+```mermaid
+flowchart LR
+  subgraph Indexing
+    U1[🧑‍💻 User Query] --> E1[🧩 Text Embeddings - Convert text to vectors]
+    E1 --> V[🧠 Vector Database - Store semantic meaning]
+  end
+
+  subgraph Retrieval_and_Augmentation
+    U2[💬 New Query] --> E2[🧩 Text Embeddings - Convert text to vectors]
+    E2 -->|🔎 Semantic Search| V
+    V --> C[📚 Top-K Similar Contexts]
+    C --> P[🧱 Augmented Prompt - Query plus Context]
+    P --> LLM[🤖 LLM such as ChatGPT]
+    LLM --> OUT[✅ Context Aware Response]
+  end
+```
+
 2. Summarization layers 
 3. Hierarchical chunking
 
